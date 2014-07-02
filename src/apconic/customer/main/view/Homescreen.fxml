@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apconic.customer.main.view.HomeScreenController">
+   <children>
+      <Label layoutX="217.0" layoutY="25.0" text="Customer Record Management" />
+      <HBox layoutX="204.0" layoutY="98.0" prefHeight="41.0" prefWidth="234.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleAddCustomer" prefHeight="41.0" prefWidth="130.0" text="Add Customer" />
+            <Button mnemonicParsing="false" onAction="#handleSearchCustomer" prefHeight="41.0" prefWidth="125.0" text="Search Customer" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
