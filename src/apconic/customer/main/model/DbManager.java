@@ -2,7 +2,6 @@ package apconic.customer.main.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DbManager {
@@ -26,26 +25,6 @@ public class DbManager {
 
 	public void disConnect() throws ClassNotFoundException, SQLException{       
 		 this.connection.close();
-	}
-	
-	public PreparedStatement query(String strSql) {
-
-        try {
-           PreparedStatement preparedStatement= connection.prepareStatement(strSql);
-            return preparedStatement;
-        } catch (java.sql.SQLException ex) {
-            return null;
-        }
-    }
-	
-	public boolean updateSql(PreparedStatement preparedStatement) {
-        try {
-           preparedStatement.executeUpdate();
-          return true;
-        } catch (java.sql.SQLException ex) {
-           return false;
-          }
-        	
 	}
 
 }

@@ -5,6 +5,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Model class for a Customer.
+ */
 public class Customer {
 
 	private final StringProperty firstName;
@@ -17,7 +20,11 @@ public class Customer {
 	private final IntegerProperty pinCode;
 	private final StringProperty country;
 
+	/**
+	 * Default constructor.
+	 */
 	public Customer() {
+		System.out.println("WOW !! Constructor");
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
@@ -25,7 +32,7 @@ public class Customer {
 		this.address = new SimpleStringProperty();
 		this.city = new SimpleStringProperty();
 		this.state = new SimpleStringProperty();
-		this.pinCode = new SimpleIntegerProperty(1234);
+		this.pinCode = new SimpleIntegerProperty();
 		this.country = new SimpleStringProperty();
 	}
 	

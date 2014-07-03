@@ -15,37 +15,56 @@ import org.controlsfx.dialog.Dialogs;
 import apconic.customer.main.model.Customer;
 import apconic.customer.main.model.DbManager;
 
+/**
+ * Dialog to edit details of a Customer.
+ */
 public class CustomerEditDialogController {
 
-		@FXML
-	    private TextField firstNameField;
-	    @FXML
-	    private TextField lastNameField;
-	    @FXML
-	    private TextField emailField;
-	    @FXML
-	    private TextField phoneField;
-	    @FXML
-	    private TextField addressField;
-	    @FXML
-	    private TextField cityField;
-	    @FXML
-	    private TextField stateField;
-	    @FXML
-	    private TextField pinCodeField;
-	    @FXML
-	    private TextField countryField;
-	    private ObservableList<Customer> data;
-	    private Stage dialogStage;
-		private Customer customer;
-		@FXML
+	@FXML
+    private TextField firstNameField;
+    @FXML
+    private TextField lastNameField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField phoneField;
+    @FXML
+    private TextField addressField;
+    @FXML
+    private TextField cityField;
+    @FXML
+    private TextField stateField;
+    @FXML
+    private TextField pinCodeField;
+    @FXML
+    private TextField countryField;
+    private SearchCustomerDialogController searchCustomerDialogController;
+    private ObservableList<Customer> data;
+    private Stage dialogStage;
+	private Customer customer;
+		
+	/**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
+	@FXML
     private void initialize() {
     }
 
+	/**
+     * Sets the stage of this dialog.
+     * 
+     * @param dialogStage
+     */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
     
+    /**
+     * Sets the customer to be edited in the dialog.
+     * 
+     * @param customer
+     */
     public void setCustomer(Customer customer) {
         this.customer = customer;
         firstNameField.setText(customer.getFirstName());
@@ -59,43 +78,54 @@ public class CustomerEditDialogController {
         countryField.setText(customer.getCountry());
     }
     
+    /**
+     * Called when the user clicks edit.
+     */
     @FXML
-    private void handleEdit() {
-    	 Action response = Dialogs.create()
- 		        .owner(dialogStage)
- 		        .title("Confirm Dialog")
- 		        .masthead("Look, a Confirm Dialog")
- 		        .message("Do you want to continue?")
- 		        .actions(Dialog.Actions.YES,Dialog.Actions.NO)
- 		        .showConfirm();    	
-        if (isInputValid() && response == Dialog.Actions.YES) {
-        	DbManager dbmanager = new DbManager();
-			try(PreparedStatement preparedStatement = dbmanager.getConnection().prepareStatement("update customers set firstname=?,lastname=?,email=?,phone=?,address=?,city=?,state=?,pincode=?,country=? where firstname=? ") ) {
-				preparedStatement.setString(1,firstNameField.getText());				
-				preparedStatement.setString(2,lastNameField.getText());
-				preparedStatement.setString(3,emailField.getText());
-				preparedStatement.setString(4,phoneField.getText());
-				preparedStatement.setString(5,addressField.getText());
-				preparedStatement.setString(6,cityField.getText());
-				preparedStatement.setString(7,stateField.getText());
-				preparedStatement.setInt(8,Integer.parseInt( pinCodeField.getText()) );
-				preparedStatement.setString(9,countryField.getText());
-				preparedStatement.setString(10,customer.getFirstName());
-				preparedStatement.executeUpdate();
-				dbmanager.disConnect();
+    private void handleEdit() {    	
+    	
+    	if (isInputValid()) {
+    		Action response = Dialogs.create()
+     		        .owner(dialogStage)
+     		        .title("Confirm Dialog")
+     		        .masthead("Look, a Confirm Dialog")
+     		        .message("Do you want to continue?")
+     		        .actions(Dialog.Actions.YES,Dialog.Actions.NO)
+     		        .showConfirm();	
+    		
+    		if(response == Dialog.Actions.YES) {
+    			DbManager dbmanager = new DbManager();
+    			
+    			try(PreparedStatement preparedStatement = dbmanager.getConnection().prepareStatement("update customers set firstname=?,lastname=?,email=?,phone=?,address=?,city=?,state=?,pincode=?,country=? where firstname=? ") ) {
+    				preparedStatement.setString(1,firstNameField.getText());				
+    				preparedStatement.setString(2,lastNameField.getText());
+    				preparedStatement.setString(3,emailField.getText());
+    				preparedStatement.setString(4,phoneField.getText());
+    				preparedStatement.setString(5,addressField.getText());
+    				preparedStatement.setString(6,cityField.getText());
+    				preparedStatement.setString(7,stateField.getText());
+    				preparedStatement.setInt(8,Integer.parseInt( pinCodeField.getText()) );
+    				preparedStatement.setString(9,countryField.getText());
+    				preparedStatement.setString(10,customer.getFirstName());
+    				preparedStatement.executeUpdate();
+    				dbmanager.disConnect();
 				
-			} catch (ClassNotFoundException | SQLException exception) {
+    			} catch (ClassNotFoundException | SQLException exception) {
 					exception.printStackTrace();
-				}
+    			  }
         	
-            dialogStage.close();
-            updateTableView();
-        }
-        else {
- 		   	dialogStage.close();
- 		}
+    				dialogStage.close();
+    				updateTableView();
+    		}
+    			else {
+    				dialogStage.close();
+    			}
+        }		
     }
     
+    /**
+     * Updates the tableview after updates on customer details 
+     */
     private void updateTableView() {	
 		data = FXCollections.observableArrayList();
 		customer.setFirstName(firstNameField.getText());
@@ -108,14 +138,23 @@ public class CustomerEditDialogController {
         customer.setPinCode(Integer.parseInt( pinCodeField.getText()));
         customer.setCountry(countryField.getText());  
         data.add(customer);
-        SearchCustomerController.updateTableView(data);
+        
+        searchCustomerDialogController.updateTableView(data);
 	}
 
+    /**
+     * Called when the user clicks Cancel.
+     */
     @FXML
     private void handleCancel() {
         dialogStage.close();
     }
     
+    /**
+     * Validates the user input in the text fields.
+     * 
+     * @return true if the input is valid
+     */
     private boolean isInputValid() {
         String errorMessage = "";
 
@@ -177,5 +216,13 @@ public class CustomerEditDialogController {
             return false;
         }
     }
+    
+    public SearchCustomerDialogController getSearchCustomerController() {
+		return searchCustomerDialogController;
+	}
+
+	public void setSearchCustomerController(SearchCustomerDialogController searchCustomerController) {
+		this.searchCustomerDialogController = searchCustomerController;
+	} 
 
 }

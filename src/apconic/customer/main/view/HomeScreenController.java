@@ -1,10 +1,10 @@
 package apconic.customer.main.view;
 
 import javafx.fxml.FXML;
-import apconic.customer.main.MainApp;
+import apconic.customer.main.MainApplication;
 
 public class HomeScreenController {
-	 private MainApp mainApp;
+	 private MainApplication mainApp;
 	       
 	 public HomeScreenController() {
 		 
@@ -14,18 +14,18 @@ public class HomeScreenController {
 	 private void initialize() {
 	 }
 	 
-      public void setMainApp(MainApp mainApp) {
+      public void setMainApp(MainApplication mainApp) {
           this.mainApp = mainApp;
       }
         
 	 @FXML
 	private void handleAddCustomer() {
-		mainApp.showAddCustomer();
+		mainApp.showAddCustomerDialog();
 	}
 
 	@FXML
 	private void handleSearchCustomer() {
-		mainApp.showSearchCustomer();
+		mainApp.showSearchCustomerDialog();
 		}
 }
 
