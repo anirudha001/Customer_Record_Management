@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="330.0" prefWidth="434.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apconic.customer.main.view.AddCustomerDialogController">
+<AnchorPane prefHeight="330.0" prefWidth="369.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apconic.customer.main.view.AddCustomerDialogController">
    <children>
-      <GridPane layoutX="29.0" layoutY="23.0" prefHeight="220.0" prefWidth="363.0">
+      <GridPane layoutX="29.0" layoutY="24.0" prefHeight="219.0" prefWidth="406.0">
          <children>
             <Label text="First Name" />
             <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
@@ -27,10 +27,20 @@
             <Label text="Phone" GridPane.rowIndex="3" />
             <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label prefHeight="17.0" prefWidth="119.0" GridPane.columnIndex="2" />
+            <Label prefHeight="17.0" prefWidth="119.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label prefHeight="17.0" prefWidth="119.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="119.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label prefHeight="17.0" prefWidth="119.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label prefHeight="17.0" prefWidth="119.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label prefHeight="17.0" prefWidth="119.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label prefHeight="17.0" prefWidth="119.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label prefHeight="17.0" prefWidth="119.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
          </children>
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="240.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="106.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="168.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="120.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -44,11 +54,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <HBox layoutX="262.0" layoutY="275.0" prefHeight="25.0" prefWidth="109.0">
+      <HBox layoutX="232.0" layoutY="275.0" prefHeight="25.0" prefWidth="70.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="59.0" text="Save" />
             <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="64.0" text="Cancel" />
          </children>
       </HBox>
+      <Button layoutX="173.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="59.0" text="Save" />
    </children>
 </AnchorPane>

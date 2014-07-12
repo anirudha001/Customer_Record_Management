@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-	<!-- TODO Add Nodes -->
+<BorderPane prefHeight="339.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <StackPane prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <effect>
+            <ImageInput x="10.0" y="10.0">
+               <source>
+                  <Image url="file:/C:\Users\apconic\Downloads\apconic.jpg" />
+               </source>
+            </ImageInput>
+         </effect>
+      </StackPane>
+   </top>
 </BorderPane>

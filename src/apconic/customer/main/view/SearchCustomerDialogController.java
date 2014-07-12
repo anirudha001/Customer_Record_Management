@@ -101,7 +101,7 @@ public class SearchCustomerDialogController {
     @FXML
     public void editRow() {	
     	 final Customer selectedPeople = customerTable.getSelectionModel().getSelectedItem();
-    	 mainApplication.editCustomer(selectedPeople);
+    	 mainApplication.showEditCustomerDialog(selectedPeople);
     }  				
     
     /**
@@ -113,7 +113,7 @@ public class SearchCustomerDialogController {
          Action response = Dialogs.create()
   		        .owner(dialogStage)
   		        .title("Confirm Dialog")
-  		        .masthead("Look, a Confirm Dialog")
+  		        .masthead("Data will be Deleted Permanantely")
   		        .message("Do you want to continue?")
   		        .actions(Dialog.Actions.YES,Dialog.Actions.NO)
   		        .showConfirm();   
@@ -177,27 +177,21 @@ public class SearchCustomerDialogController {
 	   else {
         data = FXCollections.observableArrayList();
         dbManager = new DbManager();   
-        try{      
-        	PreparedStatement preparedStatement= dbManager.getConnection().prepareStatement(getSearchBy().search());
+        try(PreparedStatement preparedStatement= dbManager.getConnection().prepareStatement(getSearchBy().search());){      
         	preparedStatement.setString(1,searchParameter+"%");
         	ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 Customer customer = new Customer();                 
                 customer.setFirstName(rs.getString(1));
-                System.out.println("String 1 : "+rs.getString(1));
                 customer.setLastName(rs.getString(2));
                 customer.setEmail(rs.getString(3));
                 customer.setPhone(rs.getString(4));
                 customer.setAddress(rs.getString(5));
-                System.out.println(rs.getString(6));
                 customer.setCity(rs.getString(6));
-                System.out.println(rs.getString(7));
                 customer.setState(rs.getString(7));
                 customer.setPinCode(rs.getInt(8));
                 customer.setCountry(rs.getString(9));           
-                data.add(customer);      
-                System.out.println("DATA : "+data.toString());
-                
+                data.add(customer);          
             }
             customerTable.setItems(data);
         } catch(Exception e){

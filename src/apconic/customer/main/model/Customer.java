@@ -24,7 +24,6 @@ public class Customer {
 	 * Default constructor.
 	 */
 	public Customer() {
-		System.out.println("WOW !! Constructor");
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();

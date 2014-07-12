@@ -74,7 +74,11 @@ public class AddCustomerDialogController {
 				preparedStatement.setInt(8,Integer.parseInt( pinCodeField.getText()) );
 				preparedStatement.setString(9,countryField.getText());
 				preparedStatement.executeUpdate();
-				
+				confirmDialog();
+	            dialogStage.close();
+			} catch (NumberFormatException e) {
+				pinCodeField.setText(null);
+                pinCodeField.setStyle("-fx-border-color: red");
 			} catch (SQLException sqlException) {
 			
 					sqlException.printStackTrace();
@@ -88,8 +92,7 @@ public class AddCustomerDialogController {
 					   }
 				}
 			}
-        	confirmDialog();
-            dialogStage.close();
+        	
         }
     }
     
@@ -116,58 +119,91 @@ public class AddCustomerDialogController {
      * 
      * @return true if the input is valid
      */
+    
+    private void setBorderColorToDefault()
+    {
+    	  firstNameField.setStyle("-fx-border-color: null");
+    	  lastNameField.setStyle("-fx-border-color: null");
+    	  emailField.setStyle("-fx-border-color: null");
+    	  phoneField.setStyle("-fx-border-color: null");
+    	  addressField.setStyle("-fx-border-color: null");
+          cityField.setStyle("-fx-border-color: null");
+          stateField.setStyle("-fx-border-color: null");
+          pinCodeField.setStyle("-fx-border-color: null");
+          countryField.setStyle("-fx-border-color: null");
+    }
+    
     private boolean isInputValid() {
-        String errorMessage = "";
+
+        boolean error = false;
+        
+        boolean isEmailMatched = false;
+    	try {
+    		Pattern emailPattern=Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+    		Matcher emailMatch=emailPattern.matcher(emailField.getText());
+    		isEmailMatched=emailMatch.matches();
+    	} catch(NullPointerException nullPointerException) {
+    	}
+        
+    	boolean isPhoneMatched = false;
+    	try {
+    		Pattern phonePattern=Pattern.compile("\\d{10}");
+    		Matcher phoneMatch=phonePattern.matcher(phoneField.getText());
+    		isPhoneMatched=phoneMatch.matches();
+    	} catch(NullPointerException nullPointerException) {
+    	  }
+    	
+		setBorderColorToDefault();
+        
         if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
-            errorMessage += "No valid first name!\n"; 
-        }
-        if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
-            errorMessage += "No valid last name!\n"; 
-        }
-        Pattern emailPattern=Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-		Matcher emailMatch=emailPattern.matcher(emailField.getText());
-		boolean isEmailMatched=emailMatch.matches();
-        if (isEmailMatched == false || emailField.getText() == null || emailField.getText().length() == 0) {
-            errorMessage += "No valid email!\n"; 
-        }
-        Pattern phonePattern=Pattern.compile("[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]");
-		Matcher phoneMatch=phonePattern.matcher(phoneField.getText());
-		boolean isPhoneMatched=phoneMatch.matches();
-        if (isPhoneMatched== false || phoneField.getText() == null || phoneField.getText().length() == 0) {
-            errorMessage += "No valid phone!\n"; 
-        }
-        if (addressField.getText() == null || addressField.getText().length() == 0) {
-            errorMessage += "No valid address!\n"; 
-        }
-        if (cityField.getText() == null || cityField.getText().length() == 0) {
-            errorMessage += "No valid city!\n"; 
-        }
-        if (stateField.getText() == null || stateField.getText().length() == 0) {
-            errorMessage += "No valid state!\n";
-        }
-        if (pinCodeField.getText() == null || pinCodeField.getText().length() == 0) {
-            errorMessage += "No valid postal code!\n"; 
-        } else {
-            // try to parse the postal code into an int.
-            try {
-                Integer.parseInt(pinCodeField.getText());
-            } catch (NumberFormatException e) {
-                errorMessage += "No valid pin code (must be an integer)!\n"; 
-            }
+        	error = true; 
+            firstNameField.setStyle("-fx-border-color: red");
+            firstNameField.setText(null);
+        } else if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
+            error = true;
+        	lastNameField.setText(null);
+        	lastNameField.setStyle("-fx-border-color: red");
+        }else if (isEmailMatched==false || emailField.getText() == null || emailField.getText().length() == 0) {
+        	
+     		
+     			error = true;
+     			emailField.setText(null);
+     			emailField.setStyle("-fx-border-color: red");
+     		
+        } else if ( isPhoneMatched == false || phoneField.getText() == null || phoneField.getText().length() == 0) {
+        	
+    		
+    			error = true;
+             phoneField.setText(null);
+             phoneField.setStyle("-fx-border-color: red");
+    		
+        } else if (addressField.getText() == null || addressField.getText().length() == 0) {
+        	error = true;
+             addressField.setText(null);
+             addressField.setStyle("-fx-border-color: red");
         }
         
-        if (countryField.getText() == null || countryField.getText().length() == 0) {
-            errorMessage += "No valid country!\n"; 
-        }
-        if (errorMessage.length() == 0) {
+        else if (cityField.getText() == null || cityField.getText().length() == 0) {
+        	 error = true;
+             cityField.setText(null);
+             cityField.setStyle("-fx-border-color: red");
+        } else if (stateField.getText() == null || stateField.getText().length() == 0) {
+        	 error = true;
+             stateField.setText(null);
+             stateField.setStyle("-fx-border-color: red");
+        } else if (pinCodeField.getText() == null || pinCodeField.getText().length() == 0) {
+    	    error = true; 
+            pinCodeField.setStyle("-fx-border-color: red");
+            
+        } else if (countryField.getText() == null || countryField.getText().length() == 0) {
+        	error = true;
+       	countryField.setStyle("-fx-border-color: red");
+       	 return false;
+       } 
+        if (error == false) {
             return true;
-        } else {
-        	Dialogs.create()
-		        .title("Invalid Fields")
-		        .masthead("Please correct invalid fields")
-		        .message(errorMessage)
-		        .showError();
+        } else {     
             return false;
         }
-    }
+    }  
 }

@@ -17,13 +17,14 @@ import javafx.stage.Stage;
 public class MainApplication extends Application {
 
     private Stage primaryStage;
+    private Stage searchCustomerDialogStage;
     private BorderPane rootLayout;
     private SearchCustomerDialogController searchCustomerDialogController;
     
     public MainApplication() {
 		
 	}
-
+    
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -56,9 +57,7 @@ public class MainApplication extends Application {
             FXMLLoader loader1 = new FXMLLoader();
             loader1.setLocation(MainApplication.class.getResource("view/HomeScreen.fxml"));
             AnchorPane anchorPane = (AnchorPane) loader1.load();
-            Scene scene = new Scene(anchorPane);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            rootLayout.setCenter(anchorPane);
             HomeScreenController controller = loader1.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
@@ -81,7 +80,6 @@ public class MainApplication extends Application {
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
-			System.out.println("Action");
 			AddCustomerDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			dialogStage.showAndWait();
@@ -98,20 +96,18 @@ public class MainApplication extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApplication.class.getResource("view/SearchCustomerDialog.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Search Customer");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
+			Stage searchCustomerDialogStage = new Stage();
+			this.searchCustomerDialogStage = searchCustomerDialogStage;
+			searchCustomerDialogStage.setTitle("Search Customer");
+			searchCustomerDialogStage.initModality(Modality.WINDOW_MODAL);
+			searchCustomerDialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			System.out.println("Search Action");
+			searchCustomerDialogStage.setScene(scene);
 			SearchCustomerDialogController searchCustomerDialogController = loader.getController();
-			searchCustomerDialogController.setDialogStage(dialogStage);
+			searchCustomerDialogController.setDialogStage(searchCustomerDialogStage);
 			searchCustomerDialogController.setMainApp(this);
 			setSearchCustomerController(searchCustomerDialogController);
-			System.out.println("Search before shownWait()");
-			dialogStage.showAndWait();
-			System.out.println("Search Final Action");
+			searchCustomerDialogStage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
 		  }
@@ -121,23 +117,23 @@ public class MainApplication extends Application {
 	 * Opens a dialog to edit specified customer's details. If the user
 	 * clicks OK, the changes are updated into the provided Customer Database 
 	 */
-    public void editCustomer(Customer customer) {
+    public void showEditCustomerDialog(Customer customer) {
     	
     	try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApplication.class.getResource("view/CustomerEditDialog.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Edit Person");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
+			Stage editCustomerDialogStage = new Stage(); 
+			editCustomerDialogStage.setTitle("Edit Person");
+			editCustomerDialogStage.initModality(Modality.WINDOW_MODAL);
+			editCustomerDialogStage.initOwner(searchCustomerDialogStage);
 			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
+			editCustomerDialogStage.setScene(scene);
 			CustomerEditDialogController customerEditDialogController = loader.getController();
-			customerEditDialogController.setDialogStage(dialogStage);
+			customerEditDialogController.setDialogStage(editCustomerDialogStage);
 			customerEditDialogController.setCustomer(customer);
 			customerEditDialogController.setSearchCustomerController(this.searchCustomerDialogController);
-			dialogStage.showAndWait();
+			editCustomerDialogStage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
 			
